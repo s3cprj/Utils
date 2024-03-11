@@ -11,6 +11,8 @@ public class ScriptRunner
         runningProcess.StartInfo.UseShellExecute = false;
         runningProcess.StartInfo.RedirectStandardOutput = false;
         runningProcess.StartInfo.RedirectStandardError = true;
+        runningProcess.StartInfo.CreateNoWindow = true;
+        runningProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
         runningProcess.Start();
     }
 
