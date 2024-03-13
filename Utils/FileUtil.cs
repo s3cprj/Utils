@@ -6,6 +6,22 @@ using System.Text;
 
 public static class FileUtil
 {
+    //　Pathにファイルがない場合作成し、ある場合その中身を消す
+    public static void CreateOrClearCsvFile(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            File.WriteAllText(filePath, string.Empty);
+        }
+        else
+        {
+            using (var fs = File.Create(filePath))
+            {
+                // 初期データを書き込む必要がある場合ここに記述
+            }
+        }
+    }
+
     public static List<string> Tail(string filePath, int numberOfLines)
     {
         List<string> lines = new List<string>();
@@ -18,6 +34,7 @@ public static class FileUtil
         using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
         {
             long fileLength = fs.Length;
+            if (fileLength == 0) { return lines; }
             position = fileLength - 1;
             fs.Seek(position, SeekOrigin.Begin);
 
