@@ -6,9 +6,34 @@ class Program
 {
     static async Task Main(string[] args)
     {
+        //設定の書き込み
+        var settingsToSave = new Dictionary<string, string>
+        {
+            {"volume","20"},
+            {"alarmSound", "mydata/Warning.mp3"}
+        };
+        SettingsManager.SaveSettings(settingsToSave);
+        //設定の読み込み
+        var loadedSettings = SettingsManager.LoadSettings();
+        foreach (var setting in loadedSettings)
+        {
+            Console.WriteLine($"{setting.Key}: {setting.Value}");
+        }
+        //設定の変更
+        SettingsManager.UpdateSettingValueByKey("volume", "25");
+        //設定の読み込み
+        loadedSettings = SettingsManager.LoadSettings();
+        foreach (var setting in loadedSettings)
+        {
+            Console.WriteLine($"{setting.Key}: {setting.Value}");
+        }
+
+
+
+
         // プロセスの実行
         ScriptRunner process = new ScriptRunner();
-        await process.RunAsync("mydata/sound.exe");
+        //await process.RunAsync("mydata/sound.exe");
         Thread.Sleep(10000);
         process.Stop();
         Console.WriteLine("here");
